@@ -218,3 +218,7 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Segredos e banco local do AtBD+
+.env
+*.sqlite3
