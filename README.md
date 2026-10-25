@@ -22,7 +22,7 @@ Um sistema enxuto, focado no fluxo do pedido (registrar, enviar à cozinha e aco
 Instruções em construção. Serão adicionadas conforme o ambiente for configurado.
 
 ## Status
-Em desenvolvimento. Projeto acadêmico de [nome do curso e instituição].
+Em desenvolvimento. Projeto acadêmico de Ciência da Computação, Universidade Cruzeiro do Sul Virtual.
 
 ## Autor
-[seu nome]
+Juliano Santana Rocha
