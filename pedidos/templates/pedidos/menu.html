@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AtBD+ | Menu</title>
+  <link rel="stylesheet" href="{% static 'pedidos/estilo.css' %}">
+</head>
+<body>
+<main class="tela">
+  <div class="topo">
+    <span class="marca">AtBD+</span>
+    <form method="post" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button class="btn" type="submit">Sair</button>
+    </form>
+  </div>
+  <div class="quem">
+    <strong>Olá, {{ user.get_full_name|default:user.username }}</strong>
+    <span>Perfil: {{ perfil|default:"sem perfil definido" }}</span>
+  </div>
+  <nav class="menu" aria-label="Menu principal">
+    {% for opcao in opcoes %}
+      <a class="opcao{% if opcao.destaque %} destaque{% endif %}" href="{{ opcao.url }}">
+        <b>{{ opcao.titulo }}</b>
+        <small>{{ opcao.descricao }}</small>
+      </a>
+    {% empty %}
+      <p class="erro" role="alert">Seu usuário ainda não tem um perfil. Procure o responsável pelo sistema.</p>
+    {% endfor %}
+  </nav>
+  <p class="rodape">Você vê apenas as opções do seu perfil.</p>
+</main>
+</body>
+</html>

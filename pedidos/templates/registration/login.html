@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AtBD+ | Entrar</title>
+  <link rel="stylesheet" href="{% static 'pedidos/estilo.css' %}">
+</head>
+<body>
+<main class="tela">
+  <div class="hero">
+    <h1>AtBD+</h1>
+    <p>Atende Bem D+. Pedidos do salão e da cozinha no mesmo lugar.</p>
+  </div>
+  <form method="post">
+    {% csrf_token %}
+    <label for="id_username">Usuário</label>
+    <input class="campo" type="text" name="username" id="id_username" autocomplete="username" autofocus required>
+    <label for="id_password">Senha</label>
+    <input class="campo" type="password" name="password" id="id_password" autocomplete="current-password" required>
+    {% if form.errors %}
+      <div class="erro" role="alert">Usuário ou senha incorretos. Confira e tente de novo.</div>
+    {% endif %}
+    <input type="hidden" name="next" value="{{ next }}">
+    <button class="btn principal" type="submit">Entrar</button>
+  </form>
+  <p class="rodape">Acesso apenas para funcionários do restaurante.</p>
+</main>
+</body>
+</html>
