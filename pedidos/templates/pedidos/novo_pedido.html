@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AtBD+ | Novo pedido</title>
+  <link rel="stylesheet" href="{% static 'pedidos/estilo.css' %}">
+</head>
+<body>
+<main class="tela">
+  <div class="topo">
+    <a class="btn" href="{% url 'menu' %}">Menu</a>
+    <form method="post" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button class="btn" type="submit">Sair</button>
+    </form>
+  </div>
+  <h2>Novo pedido</h2>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    <label for="id_mesa">Mesa</label>
+    {{ form_mesa.mesa }}
+    {% for erro in form_mesa.mesa.errors %}
+      <div class="erro" role="alert">{{ erro }}</div>
+    {% endfor %}
+
+    <h3>Itens do cardápio</h3>
+    {% if erro_itens %}<div class="erro" role="alert">{{ erro_itens }}</div>{% endif %}
+    {% for item, form in linhas %}
+      <div class="item">
+        <div class="linha"><b>{{ item.nome }}</b><span>R$ {{ item.preco }}</span></div>
+        <label for="{{ form.quantidade.id_for_label }}">Quantidade</label>
+        {{ form.quantidade }}
+        {% for erro in form.quantidade.errors %}<div class="erro" role="alert">{{ erro }}</div>{% endfor %}
+        <label for="{{ form.observacao.id_for_label }}">{{ form.observacao.label }}</label>
+        {{ form.observacao }}
+        {% for erro in form.observacao.errors %}<div class="erro" role="alert">{{ erro }}</div>{% endfor %}
+      </div>
+    {% empty %}
+      <p class="erro" role="alert">Não há itens disponíveis no cardápio.</p>
+    {% endfor %}
+
+    <button class="btn principal" type="submit">Enviar pedido</button>
+  </form>
+</main>
+</body>
+</html>

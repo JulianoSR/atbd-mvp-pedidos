@@ -12,7 +12,7 @@ PERFIS = [GARCOM, COZINHA, DONO]
 # de cada tela quando ela for construída.
 OPCOES_POR_PERFIL = {
     GARCOM: [
-        {"titulo": "Novo pedido", "descricao": "Registrar o pedido de uma mesa", "url": "#", "destaque": True},
+        {"titulo": "Novo pedido", "descricao": "Registrar o pedido de uma mesa", "url": "novo_pedido", "destaque": True},
         {"titulo": "Pedidos da mesa", "descricao": "Ver a etapa de cada pedido", "url": "#", "destaque": False},
     ],
     COZINHA: [

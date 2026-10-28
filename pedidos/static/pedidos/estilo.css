@@ -23,3 +23,9 @@ label{display:block;font-weight:700;margin:18px 0 6px}
 .opcao.destaque b{font-size:26px;color:#fff}
 .opcao.destaque small{color:#E3F2F3}
 .rodape{margin-top:auto;padding-top:24px;color:var(--muted);font-size:16px}
+a.btn{display:inline-flex;align-items:center;text-decoration:none}
+.aviso{margin-top:14px;padding:12px 14px;border-radius:10px;font-weight:700;background:#D9F2E1;color:#0F5132;border:2px solid #0F5132}
+.item{background:var(--surface);border:2px solid #B9C4CC;border-radius:12px;padding:12px 14px;margin-top:12px}
+.item .linha{display:flex;justify-content:space-between;font-size:19px}
+h2{margin:4px 0 0;font-size:26px}
+h3{margin:22px 0 0}

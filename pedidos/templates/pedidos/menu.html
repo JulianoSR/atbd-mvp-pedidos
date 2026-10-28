@@ -20,6 +20,9 @@
     <strong>Olá, {{ user.get_full_name|default:user.username }}</strong>
     <span>Perfil: {{ perfil|default:"sem perfil definido" }}</span>
   </div>
+    {% for mensagem in messages %}
+    <p class="aviso" role="status">{{ mensagem }}</p>
+  {% endfor %}
   <nav class="menu" aria-label="Menu principal">
     {% for opcao in opcoes %}
       <a class="opcao{% if opcao.destaque %} destaque{% endif %}" href="{{ opcao.url }}">
