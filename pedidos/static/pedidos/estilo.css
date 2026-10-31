@@ -28,4 +28,13 @@ a.btn{display:inline-flex;align-items:center;text-decoration:none}
 .item{background:var(--surface);border:2px solid #B9C4CC;border-radius:12px;padding:12px 14px;margin-top:12px}
 .item .linha{display:flex;justify-content:space-between;font-size:19px}
 h2{margin:4px 0 0;font-size:26px}
-h3{margin:22px 0 0}
+h3{margin:22px 0 0}.acess{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end;padding:12px 0 0}
+html.texto-1 .tela{zoom:1.25}
+html.texto-2 .tela{zoom:1.5}
+html.alto-contraste{--bg:#000;--surface:#000;--ink:#fff;--muted:#fff;--pri:#FFD400;--focus:#00E5FF;--err:#fff;--errbg:#7A0000}
+html.alto-contraste .campo{background:#000;color:#fff;border-color:#fff}
+html.alto-contraste .btn.principal{color:#000}
+html.alto-contraste .opcao{border-color:#FFD400}
+html.alto-contraste .opcao.destaque b,html.alto-contraste .opcao.destaque small{color:#000}
+html.alto-contraste .item{border-color:#fff}
+html.alto-contraste .aviso{background:#000;color:#fff;border-color:#FFD400}
