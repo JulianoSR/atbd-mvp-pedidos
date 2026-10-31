@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  testes:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: senha-temporaria-somente-ci
+          MYSQL_DATABASE: atbd
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=10
+
+    env:
+      ATBD_SECRET_KEY: chave-temporaria-somente-ci
+      ATBD_DB_USER: root
+      ATBD_DB_PASSWORD: senha-temporaria-somente-ci
+      ATBD_DB_HOST: 127.0.0.1
+
+    steps:
+      - name: Baixar o código
+        uses: actions/checkout@v6
+
+      - name: Instalar o Python 3.12
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instalar dependências do sistema (driver do MySQL)
+        run: sudo apt-get update && sudo apt-get install -y libmysqlclient-dev pkg-config
+
+      - name: Instalar dependências do projeto
+        run: pip install -r requirements.txt
+
+      - name: Verificar a configuração do Django
+        run: python manage.py check
+
+      - name: Rodar os testes automatizados
+        run: python manage.py test
