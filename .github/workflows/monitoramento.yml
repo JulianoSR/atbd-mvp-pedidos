@@ -1,0 +1,36 @@
+name: Monitoramento
+
+on:
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "Endereço a verificar (vazio = site em produção)"
+        required: false
+        default: ""
+
+env:
+  URL_PRODUCAO: https://julianosr2001.pythonanywhere.com/login/
+
+jobs:
+  verificar-disponibilidade:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verificar se o site responde
+        env:
+          URL_INFORMADA: ${{ github.event.inputs.url }}
+        run: |
+          URL="${URL_INFORMADA:-$URL_PRODUCAO}"
+          echo "Verificando: $URL"
+          for tentativa in 1 2 3; do
+            codigo=$(curl -s -o pagina.html -w "%{http_code}" --max-time 20 "$URL" || true)
+            echo "Tentativa $tentativa: HTTP $codigo"
+            if [ "$codigo" = "200" ] && grep -q "AtBD+" pagina.html; then
+              echo "STATUS: UP"
+              exit 0
+            fi
+            sleep 20
+          done
+          echo "STATUS: DOWN"
+          exit 1
