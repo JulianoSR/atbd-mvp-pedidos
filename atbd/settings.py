@@ -25,9 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ["ATBD_SECRET_KEY"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get("ATBD_DEBUG", "0") == "1"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [h for h in os.environ.get("ATBD_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",") if h]
+CSRF_TRUSTED_ORIGINS = [o for o in os.environ.get("ATBD_CSRF_ORIGINS", "").split(",") if o]
 
 
 # Application definition
@@ -75,18 +76,25 @@ WSGI_APPLICATION = 'atbd.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": os.environ.get("ATBD_DB_NAME", "atbd"),
-        "USER": os.environ["ATBD_DB_USER"],
-        "PASSWORD": os.environ["ATBD_DB_PASSWORD"],
-        "HOST": os.environ.get("ATBD_DB_HOST", "127.0.0.1"),
-        "PORT": os.environ.get("ATBD_DB_PORT", "3306"),
-        "OPTIONS": {"charset": "utf8mb4"},
+if os.environ.get("ATBD_DB_ENGINE", "mysql") == "sqlite":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": os.environ.get("ATBD_SQLITE_PATH", str(BASE_DIR / "db.sqlite3")),
+        }
     }
-}
-
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.mysql",
+            "NAME": os.environ.get("ATBD_DB_NAME", "atbd"),
+            "USER": os.environ["ATBD_DB_USER"],
+            "PASSWORD": os.environ["ATBD_DB_PASSWORD"],
+            "HOST": os.environ.get("ATBD_DB_HOST", "127.0.0.1"),
+            "PORT": os.environ.get("ATBD_DB_PORT", "3306"),
+            "OPTIONS": {"charset": "utf8mb4"},
+        }
+    }
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
@@ -122,6 +130,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -133,3 +142,8 @@ LOGIN_URL = "login"
 LOGIN_REDIRECT_URL = "menu"
 LOGOUT_REDIRECT_URL = "login"
 SESSION_COOKIE_AGE = 60 * 60 * 12  # a sessão dura um turno (12 horas)
+
+# Segurança em produção (ativada por variável de ambiente)
+HTTPS = os.environ.get("ATBD_HTTPS", "0") == "1"
+SESSION_COOKIE_SECURE = HTTPS
+CSRF_COOKIE_SECURE = HTTPS

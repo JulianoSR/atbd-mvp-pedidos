@@ -222,3 +222,5 @@ __marimo__/
 # Segredos e banco local do AtBD+
 .env
 *.sqlite3
+
+staticfiles/
